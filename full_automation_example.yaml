@@ -1,0 +1,92 @@
+alias: Автоматическое проветривание
+description: ''
+trigger:
+  - platform: state
+    entity_id:
+      - sensor.co2
+condition: []
+action:
+  - if:
+      - condition: numeric_state
+        entity_id: sensor.co2
+        below: '800'
+    then:
+      - service: fan.turn_off
+        data: {}
+        target:
+          entity_id: fan.my_fan
+  - if:
+      - condition: numeric_state
+        entity_id: sensor.co2
+        above: '800'
+        below: '1500'
+    then:
+      - service: fan.turn_on
+        data: {}
+        target:
+          entity_id: fan.my_fan
+      - if:
+          - condition: or
+            conditions:
+              - condition: numeric_state
+                entity_id: fan.my_fan
+                attribute: percentage
+                above: '40'
+              - condition: numeric_state
+                entity_id: fan.my_fan
+                attribute: percentage
+                below: '30'
+        then:
+          - service: fan.set_percentage
+            data:
+              percentage: 33
+            target:
+              entity_id: fan.my_fan
+  - if:
+      - condition: numeric_state
+        entity_id: sensor.co2
+        above: '1500'
+        below: '2500'
+    then:
+      - service: fan.turn_on
+        data: {}
+        target:
+          entity_id: fan.my_fan
+      - if:
+          - condition: or
+            conditions:
+              - condition: numeric_state
+                entity_id: fan.my_fan
+                attribute: percentage
+                above: '70'
+              - condition: numeric_state
+                entity_id: fan.my_fan
+                attribute: percentage
+                below: '60'
+        then:
+          - service: fan.set_percentage
+            data:
+              percentage: 66
+            target:
+              entity_id: fan.my_fan
+  - if:
+      - condition: numeric_state
+        entity_id: sensor.co2
+        above: '2500'
+    then:
+      - service: fan.turn_on
+        data: {}
+        target:
+          entity_id: fan.my_fan
+      - if:
+          - condition: numeric_state
+            entity_id: fan.my_fan
+            attribute: percentage
+            below: '90'
+        then:
+          - service: fan.set_percentage
+            data:
+              percentage: 100
+            target:
+              entity_id: fan.my_fan
+mode: single
