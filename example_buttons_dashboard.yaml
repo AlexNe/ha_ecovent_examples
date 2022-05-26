@@ -1,0 +1,47 @@
+type: horizontal-stack
+cards:
+  - show_name: true
+    show_icon: true
+    type: button
+    tap_action:
+      action: call-service
+      service: fan.ecovent_set_airflow
+      service_data:
+        entity_id: fan.my_fan
+        airflow: ventilation
+      target: {}
+    icon: mdi:air-filter
+    hold_action:
+      action: none
+    name: Проветривание
+    entity: fan.my_fan
+  - show_name: true
+    show_icon: true
+    type: button
+    tap_action:
+      action: call-service
+      service: fan.ecovent_set_airflow
+      service_data:
+        entity_id: fan.my_fan
+        airflow: heat_recovery
+      target: {}
+    icon: mdi:hvac
+    hold_action:
+      action: none
+    name: Рекуперация
+    entity: fan.my_fan
+  - show_name: true
+    show_icon: true
+    type: button
+    tap_action:
+      action: call-service
+      service: fan.ecovent_set_airflow
+      service_data:
+        entity_id: fan.my_fan
+        airflow: air_supply
+      target: {}
+    icon: mdi:arrow-collapse
+    hold_action:
+      action: none
+    name: Приток
+    entity: fan.my_fan
