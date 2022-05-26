@@ -1,0 +1,7 @@
+type: markdown
+content: >-
+  **Режим**: {% if state_attr('fan.my_fan', 'airflow') == "ventilation"
+  %}Проветривание{%- 
+  endif %}{% if state_attr('fan.my_fan', 'airflow') == "heat recovery"
+  %}Рекуперация{%-
+  endif %}{% if state_attr('fan.my_fan', 'airflow') == "air supply" %}Приток{%-endif %}
